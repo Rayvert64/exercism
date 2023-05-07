@@ -5,7 +5,38 @@
 //! [script]: https://github.com/exercism/rust/blob/b829ce2/bin/init_exercise.py
 //! [canonical-data]: https://raw.githubusercontent.com/exercism/problem-specifications/main/exercises/reverse-string/canonical_data.json
 
-use reverse_string::*;
+use rand::seq::SliceRandom;
+use rand::{distributions::Alphanumeric, Rng};
+use reverse_string::*; // Import the SliceRandom trait // Import the SliceRandom trait
+
+fn generate_random_string(length: usize) -> String {
+    let weird_unicode_characters = vec![
+        '𝕴', '𝖙', '𝖆', '𝖑', '𝖎', '𝖈', '𝕿', '𝖊', '𝖝', '𝖙', // Mathematical Alphanumeric Symbols
+        '⚡', '✨', '🌟', '💥', '🔥', '❄', '☀', '☁', '🌈',
+        '🌙', // Emoji and Miscellaneous Symbols
+        '♔', '♕', '♖', '♗', '♘', '♙', '♚', '♛', '♜', '♝', '♞', '♟', // Chess Symbols
+        'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', // Greek Letters
+        'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'ך', 'כ', // Hebrew Letters
+        'あ', 'い', 'う', 'え', 'お', 'か', 'き', 'く', 'け', 'こ', // Hiragana
+        'ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ', // Katakana
+        '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', // Chinese Numerals
+        '௦', '௧', '௨', '௩', '௪', '௫', '௬', '௭', '௮', '௯', // Tamil Numerals
+        'ᚠ', 'ᚡ', 'ᚢ', 'ᚣ', 'ᚤ', 'ᚥ', 'ᚦ', 'ᚧ', 'ᚨ', 'ᚩ', 'ᚪ', 'ᚫ', // Runic Script
+    ];
+    let mut rng = rand::thread_rng();
+    let mut result = String::with_capacity(length);
+
+    for _ in 0..length {
+        // Choose randomly between alphanumeric and special characters
+        if rng.gen_bool(0.8) {
+            result.push(rng.sample(Alphanumeric) as char);
+        } else {
+            result.push(*weird_unicode_characters.choose(&mut rng).unwrap());
+        }
+    }
+
+    result
+}
 
 /// Process a single test case for the property `reverse`
 fn process_reverse_case(input: &str, expected: &str) {
@@ -62,8 +93,79 @@ fn test_wide_characters() {
 
 #[test]
 #[ignore]
-#[cfg(feature = "grapheme")]
 /// grapheme clusters
 fn test_grapheme_clusters() {
     process_reverse_case("uüu", "uüu");
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_1() {
+    let input = generate_random_string(3000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_2() {
+    let input = generate_random_string(5000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_3() {
+    let input = generate_random_string(7000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_4() {
+    let input = generate_random_string(30000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_5() {
+    let input = generate_random_string(50000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_6() {
+    let input = generate_random_string(70000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_7() {
+    let input = generate_random_string(3000000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_8() {
+    let input = generate_random_string(5000000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
+}
+
+#[test]
+#[ignore]
+fn test_reverse_long_string_9() {
+    let input = generate_random_string(7000000);
+    let expected = input.chars().rev().collect::<String>();
+    process_reverse_case(&input, &expected);
 }
