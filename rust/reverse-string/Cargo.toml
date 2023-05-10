@@ -1,7 +1,5 @@
 [dependencies]
 unicode-segmentation = "*"
-num_cpus = "*"
-futures = "*"
 rand = "0.8"
 
 
