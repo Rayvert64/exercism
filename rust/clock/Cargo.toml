@@ -6,3 +6,4 @@ version = "2.4.0"
 [dependencies]
 time = "^0.3"
 tokio = { version = "1", features = ["full"] }
+chrono = "^0.4"

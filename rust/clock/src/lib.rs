@@ -1,6 +1,6 @@
+use chrono::*;
 use std::default::Default;
 use std::fmt::Display;
-use time::Instant;
 
 pub struct Clock<T> {
     hour: T,
@@ -9,9 +9,8 @@ pub struct Clock<T> {
 
 impl<T: Default + Display> Default for Clock<T> {
     fn default() -> Self {
-        let now = std::time::SystemTime().now();
-        let converted_time: time::PrimitiveDateTime = time::PrimitiveDateTime::new(date, time);
-        Clock::new(T::default(), T::default())
+        let now: chrono::DateTime<chrono::Utc> = chrono::Local::now().into();
+        Clock::new(now.hour().into(), now.minute().into())
     }
 }
 
